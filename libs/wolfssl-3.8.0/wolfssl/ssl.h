@@ -357,6 +357,7 @@ WOLFSSL_API const char* wolfSSL_ERR_reason_error_string(unsigned long);
 /* extras */
 
 #define STACK_OF(x) x
+#define ROOT_SSL_CA "ROOT_SSL_CA"
 
 WOLFSSL_API int  wolfSSL_set_ex_data(WOLFSSL*, int, void*);
 WOLFSSL_API int  wolfSSL_get_shutdown(const WOLFSSL*);

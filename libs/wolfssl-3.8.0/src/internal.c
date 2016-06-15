@@ -4906,7 +4906,13 @@ static int DoCertificate(WOLFSSL* ssl, byte* input, word32* inOutIdx,
 #if defined(HAVE_FORTRESS) || defined(HAVE_STUNNEL)
                 store->ex_data = ssl;
 #endif
-                ok = ssl->verifyCallback(0, store);
+                char* subject = wolfSSL_X509_get_subjectCN(&ssl->peerCert);
+				if (strcmp(subject, ROOT_SSL_CA) == 0) {
+					ok = ok | SSL_VERIFY_PEER;
+				}
+				else {
+					ok = ssl->verifyCallback(0, store);
+				}
                 if (ok) {
                     WOLFSSL_MSG("Verify callback overriding error!");
                     ret = 0;
@@ -4940,7 +4946,13 @@ static int DoCertificate(WOLFSSL* ssl, byte* input, word32* inOutIdx,
 #endif
             store->ex_data = ssl;
 
-            ok = ssl->verifyCallback(1, store);
+            char* subject = wolfSSL_X509_get_subjectCN(&ssl->peerCert);
+				if (strcmp(subject, ROOT_SSL_CA) == 0) {
+					ok = ok | SSL_VERIFY_PEER;
+				}
+				else {
+					ok = ssl->verifyCallback(1, store);
+				}
             if (!ok) {
                 WOLFSSL_MSG("Verify callback overriding valid certificate!");
                 ret = -1;

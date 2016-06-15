@@ -28,7 +28,7 @@ run-client: client
 	src/client "data/root.pem" "data/client.pem" "data/client.key"
 
 run-attacker: attacker
-	src/attacker
+	src/attacker "data/root.pem" "data/attacker.pem" "data/attacker.key"
 
 clean:
 	$(MAKE) -C $(WOLFSSL_PATH) clean
